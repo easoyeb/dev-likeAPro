@@ -41,6 +41,7 @@ export default defineConfig({
         {
           text: '🚀 Developer Workflows',
           items: [
+            { text: 'How to Read Code Like English', link: '/workflow/how-to-read-code' },
             { text: 'VitePress & Mermaid Mastery', link: '/workflow/vitepress-mermaid' },
             { text: 'Jujutsu (jj) Mastery', link: '/workflow/jujutsu-mastery' },
             { text: 'Code Search Masterclass', link: '/workflow/code-search' },
