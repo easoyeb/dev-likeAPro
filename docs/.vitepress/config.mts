@@ -27,6 +27,7 @@ export default defineConfig({
           text: '📱 Android Course',
           items: [
             { text: 'Course Overview', link: '/android-course/' },
+            { text: 'Lesson 1: The Kotlin Decoder', link: '/android-course/kotlin-decoder' },
             { text: 'Module 1: Fundamentals', link: '/android-course/module1-basics' },
             { text: 'Module 2: State & Storage', link: '/android-course/module2-state-management' },
             { text: 'Module 3: Custom UI & Canvas', link: '/android-course/module3-custom-ui-canvas' },
