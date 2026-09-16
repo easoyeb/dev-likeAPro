@@ -6,14 +6,13 @@ A clean, decoupled architectural standard for Android/Kotlin projects that preve
 
 ## 📐 Architecture Principles
 
-```
-[ Jetpack Compose UI Screen ]
-             │ (State & Events)
-             ▼
-[ PlayerViewModel (Coordinator) ]
-   ├── Delegates playback    ➔ [ PlaybackManager ] ──➔ [ MPVOps / NativeBridge ]
-   ├── Delegates subtitles   ➔ [ SubtitleManager ]
-   └── Delegates preferences ➔ [ PlayerPreferences ]
+```mermaid
+flowchart TD
+    UI["Jetpack Compose UI Screen"] -->|State & Events| VM["PlayerViewModel (Coordinator)"]
+    VM -->|Delegates playback| PM["PlaybackManager"]
+    VM -->|Delegates subtitles| SM["SubtitleManager"]
+    VM -->|Delegates preferences| Prefs["PlayerPreferences"]
+    PM -->|Native Engine Calls| Ops["MPVOps / NativeBridge"]
 ```
 
 ### 1. ViewModel as Coordinator

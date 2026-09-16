@@ -15,21 +15,20 @@ In Kotlin, every class, function, or interface belongs to a **Package**.
 
 To immediately know who wrote a piece of code, look at the **`import`** statements at the top of the file:
 
-```
-[ You see a class name: e.g. VideoMetadataCacheRepository, Modifier, StateFlow ]
-                                 │
-                                 ▼
-             Check top of file: Does it have an `import`?
-            ┌────────────────────┴────────────────────┐
-            ▼                                         ▼
-         [ YES ]                                   [ NO ]
-    Check package prefix:                  Is it in the same directory?
-    • xyz.mpv.rex.*   ➔ 🏠 Custom App Code       ├─ YES ➔ 🏠 Sibling Custom File
-    • android.*       ➔ 🤖 Android SDK / Jetpack └─ NO  ➔ ⚡ Kotlin Built-in
-    • androidx.*      ➔ 🤖 Android Jetpack             (String, Int, Boolean, List)
-    • kotlinx.*       ➔ ⚡ Coroutines & Flows
-    • org.koin.*      ➔ 💉 Koin DI Library
-    • is.xyz.mpv.*    ➔ 🎬 Native libmpv Wrapper
+```mermaid
+flowchart TD
+    ClassCheck["You see a class name in the code<br><i>(e.g. VideoMetadataCacheRepository, Modifier, StateFlow)</i>"]
+    ClassCheck --> CheckImports{"Check top of file: Does it have an import?"}
+    
+    CheckImports -->|Starts with xyz.mpv.rex| Custom["🏠 CUSTOM APP CODE<br><i>Lives in this project. You can edit or delete it!</i>"]
+    CheckImports -->|Starts with android.* or androidx.*| AndroidSDK["🤖 ANDROID SDK & JETPACK<br><i>Created by Google. Operating system & Compose UI.</i>"]
+    CheckImports -->|Starts with kotlin.* or kotlinx.*| KotlinStd["⚡ KOTLIN STANDARD / COROUTINES<br><i>Created by JetBrains. Basic types, Flows, Coroutines.</i>"]
+    CheckImports -->|Starts with org.koin.*| KoinDI["💉 DEPENDENCY INJECTION<br><i>Koin library wiring services together.</i>"]
+    CheckImports -->|Starts with is.xyz.mpv.*| LibMpv["🎬 NATIVE LIBMPV<br><i>Low-level C/C++ video player wrapper.</i>"]
+    
+    CheckImports -->|No import statement| LocalOrBuiltin{"Is it in the same directory?"}
+    LocalOrBuiltin -->|Yes| LocalCustom["🏠 SIBLING FILE (Custom)<br><i>Another file in the exact same package folder.</i>"]
+    LocalOrBuiltin -->|No| BuiltIn["⚡ KOTLIN BUILT-IN<br><i>String, Int, Boolean, List, Map, println</i>"]
 ```
 
 ### Real Example from `App.kt`:

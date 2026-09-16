@@ -10,16 +10,21 @@ Professional Android developers do not read an entire codebase from top to botto
 
 Before searching for features, look at `build.gradle.kts` (or `gradle/libs.versions.toml`). This tells you which tools the project uses so you know what keywords to look for:
 
-```
-[ Open build.gradle.kts or libs.versions.toml ]
-                     │
-    ┌────────────────┼────────────────┐
-    ▼                ▼                ▼
-[ UI ENGINE ]    [ DEPENDENCY INJ ]   [ STORAGE ]
-• androidx.compose   • io.insert-koin   • androidx.room
-  ➔ Jetpack Compose    ➔ Koin DI          ➔ Room Database
-• res/layout/*.xml   • google.dagger/   • datastore /
-  ➔ Classic XML Views  hilt ➔ Hilt DI     preference ➔ DataStore
+```mermaid
+flowchart TD
+    BuildFile["Inspect build.gradle.kts or libs.versions.toml"]
+    
+    BuildFile --> UI{"Check UI Engine"}
+    UI -->|androidx.compose| ComposeUI["Modern: Jetpack Compose<br><i>Look for @Composable and Kotlin files</i>"]
+    UI -->|res/layout/*.xml| XmlUI["Classic: XML Views<br><i>Look for findViewById and XML layouts</i>"]
+    
+    BuildFile --> DI{"Check Dependency Injection"}
+    DI -->|io.insert-koin| KoinDI["Koin<br><i>Look for inject(), koinInject(), module { }</i>"]
+    DI -->|com.google.dagger:hilt| HiltDI["Hilt / Dagger<br><i>Look for @Inject, @HiltViewModel</i>"]
+    
+    BuildFile --> Storage{"Check Persistence"}
+    Storage -->|androidx.room| RoomDB["Room Database<br><i>Look for @Entity, @Dao, @Database</i>"]
+    Storage -->|datastore or preference| Prefs["DataStore / SharedPreferences<br><i>Look for key-value preference stores</i>"]
 ```
 
 ---
@@ -61,15 +66,16 @@ This is your UI root. Starting from `MainActivity.kt`, you can follow the screen
 
 When you see a feature on your phone screen that you want to examine in code, use one of these three universal anchors:
 
-```
-Anchor 1: Text Anchor ────➔ Search in strings.xml ──┐
-(Visible words on screen)                          │
-                                                   ▼
-Anchor 2: Icon Anchor ────➔ Search in res/drawable/ ─┼─➔ `rg` (Ripgrep) in Kotlin source
-(Icons, drawables)          or Compose Icons.*     │     │
-                                                   │     ▼
-Anchor 3: Preference Key ─➔ Search in Preferences ─┘   🎯 Target Composable / ViewModel
-(Toggles & settings)
+```mermaid
+flowchart LR
+    A1["Anchor 1: Text Anchor<br><i>(Visible UI words)</i>"] --> Strings["Search in strings.xml"]
+    A2["Anchor 2: Icon Anchor<br><i>(Drawables & icons)</i>"] --> Assets["Search in res/drawable/ or Icons.*"]
+    A3["Anchor 3: Preference Key<br><i>(Toggles & settings)</i>"] --> PrefStore["Search in Preferences"]
+    
+    Strings --> SearchCode["`rg` in Kotlin source"]
+    Assets --> SearchCode
+    PrefStore --> SearchCode
+    SearchCode --> TargetFile["🎯 Target Composable / ViewModel"]
 ```
 
 ---
