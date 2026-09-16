@@ -20,6 +20,7 @@ flowchart TD
 | Module | Topic | What You Will Learn |
 | :--- | :--- | :--- |
 | **[Lesson 1: The Kotlin Decoder](./kotlin-decoder)** | **Syntax & Mental Model** | Custom vs Library classes, symbol matrix (`?`, `::`, `@`, `by`), Lambdas & Receivers |
+| **[Lesson 2: Universal Code Navigation](./codebase-navigation)** | **Finding Any Feature** | 3 Universal Anchors (Strings, Icons, Routes), Manifest entry points, and Stack inspection |
 | **[Module 1](./module1-basics)** | **Fundamentals** | Activities, Composables, Layouts, Modifier system, and Component Structure |
 | **[Module 2](./module2-state-management)** | **State & Storage** | StateFlow, `remember`, PreferenceStores, Koin Dependency Injection |
 | **[Module 3](./module3-custom-ui-canvas)** | **Custom UI & Canvas** | Drawing custom Seekbars, progress tracks, and dynamic color logic |
