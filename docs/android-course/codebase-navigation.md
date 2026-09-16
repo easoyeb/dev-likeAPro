@@ -14,17 +14,17 @@ Before searching for features, look at `build.gradle.kts` (or `gradle/libs.versi
 flowchart TD
     BuildFile["Inspect build.gradle.kts or libs.versions.toml"]
     
-    BuildFile --> UI{"Check UI Engine"}
-    UI -->|androidx.compose| ComposeUI["Modern: Jetpack Compose<br><i>Look for @Composable and Kotlin files</i>"]
-    UI -->|res/layout/*.xml| XmlUI["Classic: XML Views<br><i>Look for findViewById and XML layouts</i>"]
+    BuildFile --> UI["Check UI Engine"]
+    UI -->|"androidx.compose"| ComposeUI["Modern: Jetpack Compose (look for @Composable)"]
+    UI -->|"res/layout/*.xml"| XmlUI["Classic: XML Views (look for findViewById)"]
     
-    BuildFile --> DI{"Check Dependency Injection"}
-    DI -->|io.insert-koin| KoinDI["Koin<br><i>Look for inject(), koinInject(), module { }</i>"]
-    DI -->|com.google.dagger:hilt| HiltDI["Hilt / Dagger<br><i>Look for @Inject, @HiltViewModel</i>"]
+    BuildFile --> DI["Check Dependency Injection"]
+    DI -->|"io.insert-koin"| KoinDI["Koin (look for inject, koinInject, module)"]
+    DI -->|"com.google.dagger:hilt"| HiltDI["Hilt / Dagger (look for @Inject, @HiltViewModel)"]
     
-    BuildFile --> Storage{"Check Persistence"}
-    Storage -->|androidx.room| RoomDB["Room Database<br><i>Look for @Entity, @Dao, @Database</i>"]
-    Storage -->|datastore or preference| Prefs["DataStore / SharedPreferences<br><i>Look for key-value preference stores</i>"]
+    BuildFile --> Storage["Check Persistence"]
+    Storage -->|"androidx.room"| RoomDB["Room Database (look for @Entity, @Dao)"]
+    Storage -->|"datastore / preference"| Prefs["DataStore / SharedPreferences"]
 ```
 
 ---
@@ -68,14 +68,14 @@ When you see a feature on your phone screen that you want to examine in code, us
 
 ```mermaid
 flowchart LR
-    A1["Anchor 1: Text Anchor<br><i>(Visible UI words)</i>"] --> Strings["Search in strings.xml"]
-    A2["Anchor 2: Icon Anchor<br><i>(Drawables & icons)</i>"] --> Assets["Search in res/drawable/ or Icons.*"]
-    A3["Anchor 3: Preference Key<br><i>(Toggles & settings)</i>"] --> PrefStore["Search in Preferences"]
+    A1["Anchor 1: Text Anchor (Visible UI words)"] --> Strings["Search in strings.xml"]
+    A2["Anchor 2: Icon Anchor (Drawables and icons)"] --> Assets["Search in res/drawable/ or Icons.*"]
+    A3["Anchor 3: Preference Key (Toggles and settings)"] --> PrefStore["Search in Preferences"]
     
-    Strings --> SearchCode["`rg` in Kotlin source"]
+    Strings --> SearchCode["Run ripgrep (rg) in Kotlin source"]
     Assets --> SearchCode
     PrefStore --> SearchCode
-    SearchCode --> TargetFile["🎯 Target Composable / ViewModel"]
+    SearchCode --> TargetFile["Target Composable or ViewModel"]
 ```
 
 ---
@@ -147,23 +147,13 @@ Once you find the UI file, how do you trace what the feature *actually does*?
 
 Every well-architected Android app follows the **Unidirectional Data Flow (UDF)**:
 
-```
-[ User Taps Button in UI ]
-            │
-            ▼
-[ UI calls ViewModel / Manager ]   (e.g., viewModel.onSeekForward(10))
-            │
-            ▼
-[ ViewModel updates Business Logic ] (Calculates new timestamp)
-            │
-            ▼
-[ Delegates to Repository or Engine ] (Writes to Database, or calls libmpv / MediaPlayer)
-            │
-            ▼
-[ StateFlow updates State ]        (e.g., `currentTime = 45s`)
-            │
-            ▼
-[ UI Recomposes & Renders new State ]
+```mermaid
+flowchart TD
+    User["User Taps Button in UI"] --> VM["UI calls ViewModel or Manager"]
+    VM --> Logic["ViewModel updates Business Logic"]
+    Logic --> Repo["Delegates to Repository, DB, or Player Engine"]
+    Repo --> State["StateFlow updates State"]
+    State --> UI["UI Observes State and Recomposes"]
 ```
 
 ### Reading the Trail:

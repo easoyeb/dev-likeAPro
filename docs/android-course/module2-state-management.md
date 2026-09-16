@@ -2,6 +2,12 @@
 
 State is the single source of truth in any modern app. If user preferences change, the UI must update automatically.
 
+```mermaid
+flowchart LR
+    Store["PreferenceStore (Disk Storage)"] -->|"Reads/Writes"| Prefs["PlayerPreferences (Koin Singleton)"]
+    Prefs -->|"collectAsState()"| Compose["Compose UI (Auto-Recomposes)"]
+```
+
 ---
 
 ## 1. How Preferences Work (`PreferenceStore`)

@@ -4,12 +4,11 @@
 
 Modern Android development uses **Jetpack Compose** (declarative UI framework) combined with **Kotlin**.
 
-```
-[ UI Layer (Composables) ] ◄── Observes ── [ ViewModel (State Holder) ]
-                                                   │
-                                            Delegates to
-                                                   ▼
-                                         [ Managers / Repository ]
+```mermaid
+flowchart TD
+    VM["ViewModel (State Holder)"] -->|"StateFlow (Observes)"| UI["UI Layer (Composables)"]
+    UI -->|"User Events (Clicks, Gestures)"| VM
+    VM -->|"Delegates Operations"| Repo["Managers / Repositories / DB"]
 ```
 
 ---
