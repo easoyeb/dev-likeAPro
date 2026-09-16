@@ -139,13 +139,23 @@ When working inside Antigravity / Gemini CLI:
 
 Here is the exact step-by-step methodology used to add a toggle setting for making the video progress bar white:
 
-```mermaid
-flowchart TD
-    A["1. Grep Search existing preferences<br><i>(grep_search: 'use_wavy_seekbar', 'SeekBar')</i>"] --> B["2. Identify target files<br><i>PlayerPreferences.kt, Seekbar.kt, UI Screens</i>"]
-    B --> C["3. Inspect sliced line ranges<br><i>view_file(StartLine, EndLine)</i>"]
-    C --> D["4. Add Preference Key & Logic<br><i>PlayerPreferences.kt + Seekbar.kt</i>"]
-    D --> E["5. Add Settings Toggle UI & Strings<br><i>PlayerPreferencesScreen.kt + strings.xml</i>"]
-    E --> F["6. Verify & Build<br><i>./gradlew compileDebugKotlin -I local-env.gradle.kts</i>"]
+```
+[ 1. Grep Search ] ➔ Search existing keys (e.g. 'use_wavy_seekbar')
+        │
+        ▼
+[ 2. Target Files ] ➔ PlayerPreferences.kt, Seekbar.kt, Settings Screen
+        │
+        ▼
+[ 3. Inspect Code ] ➔ Read exact lines around the pattern
+        │
+        ▼
+[ 4. Add Logic    ] ➔ Define new preference key & update Canvas colors
+        │
+        ▼
+[ 5. Add UI & XML ] ➔ SwitchPreference in Settings UI + strings.xml
+        │
+        ▼
+[ 6. Fast Build   ] ➔ ./gradlew compileDebugKotlin
 ```
 
 ### Steps Executed:

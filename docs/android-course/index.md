@@ -6,11 +6,20 @@ Welcome to the hands-on Android Development course! This course is designed to t
 
 ## 🗺️ Course Curriculum Roadmap
 
+
+
+1. **[Lesson 1: The Kotlin Decoder](./kotlin-decoder)** — Demystify Kotlin symbols (`?`, `::`, `@`, `by`) & Custom vs Library classes.
+2. **[Lesson 2: Universal Code Navigation](./codebase-navigation)** — The 3 Universal Anchors to locate any feature in any Android app in 60s.
+3. **[Module 1: Compose Fundamentals](./module1-basics)** — Activities, Composables, Layouts & Modifiers.
+4. **[Module 2: State & Storage](./module2-state-management)** — StateFlow, Preferences, and Koin Dependency Injection.
+5. **[Module 3: Custom UI & Canvas](./module3-custom-ui-canvas)** — Drawing custom Seekbars and Canvas graphics.
+6. **[Module 4: Reading Codebases](./module4-how-to-read-codebases)** — Reverse-engineering real production apps.
+
 ```mermaid
 flowchart TD
-    M1["Module 1: Android & Jetpack Compose Fundamentals"] --> M2["Module 2: State, Preferences & Dependency Injection"]
-    M2 --> M3["Module 3: Custom UI, Canvas & Component Drawing"]
-    M3 --> M4["Module 4: How Pros Read Codebases & Add Features"]
+    A["📱 Learn Kotlin & Android Foundations"] --> B["🧭 Navigate Codebases Like a Senior"]
+    B --> C["🎨 Build Custom UI & Canvas Seekbars"]
+    C --> D["🚀 Ship Features to Worldwide Users"]
 ```
 
 ---

@@ -8,12 +8,20 @@ Here is the exact reverse-engineering breakdown of how the **White Video Progres
 
 ## 🛠️ The 5-Step Codebase Reverse-Engineering Methodology
 
-```mermaid
-flowchart TD
-    Step1["1. Search for Existing Precedents<br><i>Grep for 'SeekBar', 'use_wavy_seekbar'</i>"] --> Step2["2. Map the Architecture & Data Flow<br><i>Preference ➔ Composable ➔ Canvas</i>"]
-    Step2 --> Step3["3. Identify Injection Points<br><i>PlayerPreferences.kt + Seekbar.kt</i>"]
-    Step3 --> Step4["4. Expose Setting in Preferences UI<br><i>PlayerPreferencesScreen.kt + strings.xml</i>"]
-    Step4 --> Step5["5. Compile & Runtime Test<br><i>./gradlew installDebug -I local-env.gradle.kts</i>"]
+```
+[ 1. Search Precedents ] ➔ Grep for similar features (e.g. 'use_wavy_seekbar')
+            │
+            ▼
+[ 2. Map Data Flow     ] ➔ PreferenceStore ➔ Composable ➔ Canvas
+            │
+            ▼
+[ 3. Identify Points   ] ➔ PlayerPreferences.kt + Seekbar.kt
+            │
+            ▼
+[ 4. Expose in UI      ] ➔ PlayerPreferencesScreen.kt + strings.xml
+            │
+            ▼
+[ 5. Compile & Test    ] ➔ ./gradlew compileDebugKotlin
 ```
 
 ---
