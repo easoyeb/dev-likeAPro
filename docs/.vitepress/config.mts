@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? '/dev-likeAPro/' : '/',
   title: "Dev Like A Pro",
   description: "Personal Developer Wiki, Architecture Guides & CLI Cheat Sheets",
   lang: 'en-US',
