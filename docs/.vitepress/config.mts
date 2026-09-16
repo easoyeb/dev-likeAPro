@@ -24,13 +24,19 @@ export default defineConfig({
     sidebar: {
       '/android-course/': [
         {
-          text: '📱 Android Course',
+          text: '🚀 Course Curriculum',
           items: [
             { text: 'Course Overview', link: '/android-course/' },
             { text: 'Lesson 1: The Kotlin Decoder', link: '/android-course/kotlin-decoder' },
-            { text: 'Lesson 2: Universal Code Navigation', link: '/android-course/codebase-navigation' },
-            { text: 'Lesson 3: The Feature Lifecycle', link: '/android-course/feature-lifecycle' },
-            { text: 'Module 1: Fundamentals', link: '/android-course/module1-basics' },
+            { text: 'Lesson 2: Reading Code Like English', link: '/android-course/how-to-read-code' },
+            { text: 'Lesson 3: Universal Code Navigation', link: '/android-course/codebase-navigation' },
+            { text: 'Lesson 4: The Feature Lifecycle', link: '/android-course/feature-lifecycle' }
+          ]
+        },
+        {
+          text: '🛠️ Deep Dive Modules',
+          items: [
+            { text: 'Module 1: Compose & UI Basics', link: '/android-course/module1-basics' },
             { text: 'Module 2: State & Storage', link: '/android-course/module2-state-management' },
             { text: 'Module 3: Custom UI & Canvas', link: '/android-course/module3-custom-ui-canvas' },
             { text: 'Module 4: Reading Codebases', link: '/android-course/module4-how-to-read-codebases' }
@@ -41,7 +47,6 @@ export default defineConfig({
         {
           text: '🚀 Developer Workflows',
           items: [
-            { text: 'How to Read Code Like English', link: '/workflow/how-to-read-code' },
             { text: 'VitePress & Mermaid Mastery', link: '/workflow/vitepress-mermaid' },
             { text: 'Jujutsu (jj) Mastery', link: '/workflow/jujutsu-mastery' },
             { text: 'Code Search Masterclass', link: '/workflow/code-search' },

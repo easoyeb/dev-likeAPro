@@ -1,4 +1,4 @@
-# 📖 How to Read Code Like Human Language
+# 📖 Lesson 2: How to Read Code Like Human Language
 
 When you first learn programming—especially with AI assistants generating hundreds of lines—code looks like an alien soup of symbols: `by inject()`, `CoroutineScope(SupervisorJob() + Dispatchers.Default)`, `MutableStateFlow`, `debounce(1_000)`, `collect { ... }`.
 
@@ -181,5 +181,5 @@ Keep these 6 rules in your head when looking at unfamiliar code:
 | `runCatching { ... }` | *"Try this risky action; if it throws an error, don't crash the app."* |
 
 ---
-
-*Next: Practice reading the files in your codebase using the 3-Pass Technique!*
+ 
+*Next: Proceed to [Lesson 3: Universal Code Navigation](./codebase-navigation).*

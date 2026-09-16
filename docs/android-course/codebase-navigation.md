@@ -1,4 +1,4 @@
-# 🧭 Universal Code Navigation: How to Find Any Feature in ANY Android Project
+# 🧭 Lesson 3: Universal Code Navigation — Finding Any Feature
 
 Whether you are exploring **mpvRex**, **NewPipe**, **Tachiyomi**, or a corporate app at a tech company, large codebases can feel like a labyrinth of hundreds of files.
 
@@ -177,4 +177,4 @@ When approaching **any** Android codebase:
 
 ---
 
-*Next: Proceed to [Module 1: Android & Jetpack Compose Fundamentals](./module1-basics).*
+*Next: Proceed to [Lesson 4: The Feature Lifecycle](./feature-lifecycle).*

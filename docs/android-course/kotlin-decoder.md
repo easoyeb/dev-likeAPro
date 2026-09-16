@@ -170,4 +170,4 @@ private val metadataCache: VideoMetadataCacheRepository by inject()
 
 ---
 
-*Next: Proceed to [Module 1: Android & Jetpack Compose Fundamentals](./module1-basics).*
+*Next: Proceed to [Lesson 2: Reading Code Like Human Language](./how-to-read-code).*

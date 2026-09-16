@@ -1,4 +1,4 @@
-# 🛠️ Lesson 3: The Feature Lifecycle — Adding & Deleting Features Like a Senior Engineer
+# 🛠️ Lesson 4: The Feature Lifecycle — Adding & Deleting Features Like a Senior Engineer
 
 Adding a feature to a small tutorial app is easy. But in a real-world, production Android app (like **mpvRex**, **NewPipe**, or a commercial product), features touch multiple layers: **Storage**, **Business Logic**, **Dependency Injection**, **ViewModels**, **Compose UI**, and **String Resources**.
 
