@@ -14,7 +14,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: '📱 Android Course', link: '/android-course/' },
-      { text: 'Workflows', link: '/workflow/code-search' },
+      { text: 'Workflows', link: '/workflow/vitepress-mermaid' },
       { text: 'Architecture', link: '/architecture/ops-manager-pattern' },
       { text: 'Cheat Sheets', link: '/cheatsheets/cli-tools' },
       { text: 'AI & Automation', link: '/ai/agent-guide' }
@@ -41,6 +41,7 @@ export default defineConfig({
         {
           text: '🚀 Developer Workflows',
           items: [
+            { text: 'VitePress & Mermaid Mastery', link: '/workflow/vitepress-mermaid' },
             { text: 'Jujutsu (jj) Mastery', link: '/workflow/jujutsu-mastery' },
             { text: 'Code Search Masterclass', link: '/workflow/code-search' },
             { text: 'Git & Rebase Mastery', link: '/workflow/git-mastery' },
