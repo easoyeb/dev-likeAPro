@@ -86,11 +86,15 @@ flowchart LR
 
 ---
 
-## 📚 Section Table of Contents
+## 📚 Complete Guide Series
 
-Explore the dedicated guides in this section to turn your mobile terminal into a professional AI pair-programming workstation:
+Explore the dedicated guides in this section to turn your mobile terminal into a professional, zero-cost AI pair-programming workstation:
 
-1. [**High-Speed Context Extraction in Termux**](/human-harness/context-extraction) — Mastering `ripgrep`, `fd`, `sed`, and bundling multi-file context into your Android clipboard with one command.
-2. [**Prompt Templates & Directives for Free Web AIs**](/human-harness/prompt-templates) — Battle-tested prompts that stop AI truncation, enforce unified diffs, and diagnose Android crashes.
-3. [**Applying AI Code & Diffs in Termux**](/human-harness/patching-and-diffs) — Applying unified diffs with `git apply`, handling partial code snippets, and managing git branches safely.
-4. [**Automating the Middleman: Termux Shell Toolkit**](/human-harness/termux-automation-scripts) — Lightweight bash scripts (`ai-ctx`, `ai-apply`, `ai-error`) that do the heavy lifting for you.
+1. [**The Portable Project Brief (`AGENTS.md`)**](/human-harness/project-brief-agents-md) — The 30-line architecture blueprint to paste into every new chat to eliminate hallucinations.
+2. [**High-Speed Context Extraction in Termux**](/human-harness/context-extraction) — Slicing lines with `sed`, finding symbols with `ripgrep`, and copying multi-file context to the Android clipboard.
+3. [**Prompt Templates & Directives for Free Web AIs**](/human-harness/prompt-templates) — Battle-tested prompts that stop AI truncation and enforce strict Android coding standards.
+4. [**The Search/Replace Block Protocol (Aider Pattern)**](/human-harness/search-replace-blocks) — The gold standard for applying code edits automatically in Termux using `apply-sr.py`.
+5. [**Applying AI Code & Diffs in Termux**](/human-harness/patching-and-diffs) — Applying unified diffs with `git apply`, managing temporary scratch branches, and handling truncated responses.
+6. [**Chat Session Hygiene & The Error Feedback Loop**](/human-harness/chat-session-hygiene) — The "One Task Per Chat" rule and how to feed raw compiler errors and Logcat crash dumps back to the AI.
+7. [**Automating the Middleman: Termux Shell Toolkit**](/human-harness/termux-automation-scripts) — Lightweight bash scripts (`ai-ctx`, `ai-diff`, `ai-patch`, `ai-error`, `ai-logcat`) that automate the loop.
+8. [**Free & Low-Cost CLI Harness Alternatives for Termux**](/human-harness/free-cli-harness-alternatives) — Running automated agents like Aider with 100% free Google AI Studio API keys (Gemini 1.5 Flash/Pro) inside Termux!

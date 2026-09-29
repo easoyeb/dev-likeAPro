@@ -182,13 +182,17 @@ export default defineConfig({
       ],
       '/human-harness/': [
         {
-          text: '🧠 The Human Harness',
+          text: '🧠 The Human Harness (Zero-Cost AI)',
           items: [
             { text: 'Human Harness Blueprint', link: '/human-harness/' },
+            { text: 'The Portable Project Brief (AGENTS.md)', link: '/human-harness/project-brief-agents-md' },
             { text: 'High-Speed Context Extraction', link: '/human-harness/context-extraction' },
             { text: 'Prompt Templates & Directives', link: '/human-harness/prompt-templates' },
+            { text: 'Search/Replace Block Protocol', link: '/human-harness/search-replace-blocks' },
             { text: 'Applying AI Code & Diffs', link: '/human-harness/patching-and-diffs' },
-            { text: 'Termux Shell Automation Toolkit', link: '/human-harness/termux-automation-scripts' }
+            { text: 'Session Hygiene & Error Feedback', link: '/human-harness/chat-session-hygiene' },
+            { text: 'Termux Shell Automation Toolkit', link: '/human-harness/termux-automation-scripts' },
+            { text: 'Free CLI Harnesses (Aider & Gemini)', link: '/human-harness/free-cli-harness-alternatives' }
           ]
         }
       ]
