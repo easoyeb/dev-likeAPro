@@ -7,7 +7,10 @@ hero:
   tagline: "Curated guides, architectural patterns, Android courses, CLI cheat sheets, and high-performance development workflows."
   actions:
     - theme: brand
-      text: "📱 Android Dev Course"
+      text: "📱 Android Developer Guide"
+      link: /android-guide/
+    - theme: alt
+      text: "🎓 Android Course"
       link: /android-course/
     - theme: alt
       text: "Code Search Masterclass"
@@ -15,9 +18,6 @@ hero:
     - theme: alt
       text: "🥋 Jujutsu (jj) Guide"
       link: /workflow/jujutsu-mastery
-    - theme: alt
-      text: "Git & Rebase Guide"
-      link: /workflow/git-mastery
 
 features:
   - icon: 📱
