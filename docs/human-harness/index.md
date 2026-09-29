@@ -98,3 +98,4 @@ Explore the dedicated guides in this section to turn your mobile terminal into a
 6. [**Chat Session Hygiene & The Error Feedback Loop**](/human-harness/chat-session-hygiene) — The "One Task Per Chat" rule and how to feed raw compiler errors and Logcat crash dumps back to the AI.
 7. [**Automating the Middleman: Termux Shell Toolkit**](/human-harness/termux-automation-scripts) — Lightweight bash scripts (`ai-ctx`, `ai-diff`, `ai-patch`, `ai-error`, `ai-logcat`) that automate the loop.
 8. [**Free & Low-Cost CLI Harness Alternatives for Termux**](/human-harness/free-cli-harness-alternatives) — Running automated agents like Aider with 100% free Google AI Studio API keys (Gemini 1.5 Flash/Pro) inside Termux!
+9. [**Code Compression, Model Routing & Master Runbook**](/human-harness/symbol-maps-and-outlining) — Generating 95% compressed skeleton outlines, choosing the best free model, and the daily step-by-step checklist.

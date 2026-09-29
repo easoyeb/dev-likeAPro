@@ -29,7 +29,7 @@ Create this file at the root of your project:
 - Flow transformations must use `SharingStarted.WhileSubscribed(5_000)` to preserve phone battery.
 
 ## 3. Environment & Build Constraints
-- Development Environment: Android device running Termux and AndroidIDE.
+- Development Environment: Android device running Ubuntu 24.04 chroot (via Termux) and AndroidIDE.
 - NO DESKTOP ANDROID STUDIO: Do not suggest GUI-based menus or Android Studio wizards.
 - Git Safety: Never chain multiple git commands with `&&` (e.g. `add && commit && push`). Always execute git steps independently.
 - Clean Diffs: Provide changes as Search/Replace blocks or unified diffs. Never truncate code with `// ... rest of code unchanged`.
@@ -39,14 +39,14 @@ Create this file at the root of your project:
 
 ## ⚡ 2. The 1-Tap Clipboard Shortcut
 
-Add this alias to your `~/.bashrc` in Termux:
+Add this alias to your `~/.bashrc` in Ubuntu:
 
 ```bash
-alias ctx-brief="cat ~/Projects/mpvRex/AGENTS.md | termux-clipboard-set && echo '📋 AGENTS.md copied to clipboard!'"
+alias ctx-brief="cat ~/Projects/mpvRex/AGENTS.md | clip && echo '📋 AGENTS.md copied to Android clipboard!'"
 ```
 
 Whenever you open a new chat window in ChatGPT, Claude, or Gemini:
-1. Open Termux and type:
+1. In your Ubuntu terminal, type:
    ```bash
    ctx-brief
    ```

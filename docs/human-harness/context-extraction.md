@@ -1,24 +1,24 @@
-# ⚡ High-Speed Context Extraction in Termux
+# ⚡ High-Speed Context Extraction in Ubuntu on Android
 
 When acting as the human harness between your mobile project and a free web LLM, your biggest bottleneck is **getting the right code into your phone's clipboard quickly**.
 
-If you manually open a file, drag your thumb across 200 lines to select text, and switch apps, you will waste minutes per prompt. In this guide, you will learn how to extract targeted, token-efficient context directly into your Android clipboard with single CLI commands in **Termux**.
+If you manually open a file, drag your thumb across 200 lines to select text, and switch apps, you will waste minutes per prompt. In this guide, you will learn how to extract targeted, token-efficient context directly into your Android clipboard with single CLI commands inside your **Ubuntu chroot** environment.
 
 ---
 
-## 📋 1. Essential Termux Setup: `termux-api`
+## 📋 1. The Architecture: Localhost Socket Clipboard Bridge
 
-To pipe terminal output straight into your Android system clipboard, ensure the Termux API package is installed:
+Inside an **Ubuntu chroot/sandbox** running on Android via Termux, standard Bionic binaries like `/data/data/com.termux/.../termux-clipboard-set` cannot run due to Bionic libc vs GNU glibc differences and Android UID sandbox boundaries.
 
+Instead, your environment uses a **Localhost Socket Bridge**:
+1. **Termux Host:** Runs a background `socat` listener on `127.0.0.1:28282` connected to Android's `termux-clipboard-set`.
+2. **Ubuntu Environment:** The `/usr/local/bin/clip` wrapper script streams text over bash's native `/dev/tcp/127.0.0.1/28282` directly into the Android clipboard with zero external package dependencies!
+
+### The Command: `clip`
+Inside Ubuntu, you pipe any terminal output straight to Android's clipboard:
 ```bash
-# In Termux:
-pkg install termux-api
+echo "Hello from Ubuntu!" | clip
 ```
-*(Make sure the Termux:API app is installed on your phone from F-Droid).*
-
-Once installed, you have two superpower commands:
-- **`termux-clipboard-set`:** Copies stdin directly to Android's clipboard.
-- **`termux-clipboard-get`:** Prints whatever is currently in your Android clipboard.
 
 ---
 
@@ -34,7 +34,7 @@ Suppose lines 85 to 135 in `PlayerViewModel.kt` contain the function you want to
 sed -n '85,135p' app/src/main/kotlin/xyz/mpv/rex/ui/player/PlayerViewModel.kt
 
 # Copy directly to Android clipboard:
-sed -n '85,135p' app/src/main/kotlin/xyz/mpv/rex/ui/player/PlayerViewModel.kt | termux-clipboard-set
+sed -n '85,135p' app/src/main/kotlin/xyz/mpv/rex/ui/player/PlayerViewModel.kt | clip
 ```
 
 Now simply switch to your browser and tap **Paste**!
@@ -46,48 +46,25 @@ Now simply switch to your browser and tap **Paste**!
 If you don't know the line numbers but know the function or class name:
 
 ```bash
-# Extract function definition with 10 lines of surrounding context:
-rg -C 10 "fun handleTrackSelection" app/src/main/ | termux-clipboard-set
+# Extract function definition with 10 lines of surrounding context straight to clipboard:
+rg -C 10 "fun handleTrackSelection" app/src/main/ | clip
 ```
 
 ---
 
-## 📦 4. Method 3: Bundling Code with File Headers Automatically
+## 📦 4. Method 3: The Built-in `ctx` File Helper
 
-Web AIs give much better code when they know the exact file path and package name. Instead of manually typing:
-> *"Here is file `app/src/main/.../MyFile.kt`:"*
-
-Use this bash function in your `~/.bashrc`:
+Your Ubuntu environment already includes `/usr/local/bin/ctx` ([`README.md`](file:///root/Projects/dev-likeAPro/README.md)):
 
 ```bash
-# Add this function to your ~/.bashrc in Termux:
-ctx() {
-    local file="$1"
-    if [ ! -f "$file" ]; then
-        echo "Error: File '$file' does not exist."
-        return 1
-    fi
-
-    {
-        echo "File: \`$file\`"
-        echo '```kotlin'
-        cat "$file"
-        echo '```'
-    } | termux-clipboard-set
-
-    echo "✅ Copied '$file' to clipboard with Markdown formatting!"
-}
-```
-
-### Usage:
-```bash
+# Formats file with markdown syntax highlighting and sends to Android clipboard:
 ctx app/src/main/kotlin/xyz/mpv/rex/database/dao/PlaylistDao.kt
 ```
-Now switch to ChatGPT / Claude / Gemini and hit Paste. It instantly receives:
+
+Switch to ChatGPT / Claude / Gemini and hit Paste. It instantly receives:
 
 ````markdown
-File: `app/src/main/kotlin/xyz/mpv/rex/database/dao/PlaylistDao.kt`
-```kotlin
+```kt
 package xyz.mpv.rex.database.dao
 ... full file contents ...
 ```
@@ -101,13 +78,13 @@ When asking an AI: *"Did I break anything with this change?"* or *"Write a unit 
 
 ```bash
 # 1. Copy unstaged working tree changes:
-git diff | termux-clipboard-set
+git diff | clip
 
 # 2. Copy the most recent commit:
-git show HEAD | termux-clipboard-set
+git show HEAD | clip
 
 # 3. Copy diff between your branch and master:
-git diff origin/master...HEAD | termux-clipboard-set
+git diff origin/master...HEAD | clip
 ```
 
 ---
@@ -116,11 +93,11 @@ git diff origin/master...HEAD | termux-clipboard-set
 
 When you are wiring a feature that touches **an Entity, a DAO, a Repository, and a ViewModel**, you need to feed all 4 files at once.
 
-Save this script as `~/bin/bundle-ctx.sh`:
+Save this script as `/usr/local/bin/bundle-ctx`:
 
 ```bash
 #!/usr/bin/env bash
-# Usage: bundle-ctx.sh file1.kt file2.kt file3.kt ...
+# Usage: bundle-ctx file1.kt file2.kt file3.kt ...
 
 if [ "$#" -eq 0 ]; then
     echo "Usage: bundle-ctx <file1> <file2> ..."
@@ -142,14 +119,19 @@ fi
             echo "⚠️ Warning: '$file' not found." >&2
         fi
     done
-} | termux-clipboard-set
+} | clip
 
 echo "🚀 Bundled $# files and copied directly to Android clipboard!"
 ```
 
+Make it executable:
+```bash
+chmod +x /usr/local/bin/bundle-ctx
+```
+
 ### Execution:
 ```bash
-bundle-ctx.sh \
+bundle-ctx \
     app/src/main/kotlin/xyz/mpv/rex/database/entities/PlaylistEntity.kt \
     app/src/main/kotlin/xyz/mpv/rex/database/dao/PlaylistDao.kt \
     app/src/main/kotlin/xyz/mpv/rex/database/repository/PlaylistRepository.kt

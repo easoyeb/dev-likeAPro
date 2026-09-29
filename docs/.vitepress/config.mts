@@ -192,7 +192,8 @@ export default defineConfig({
             { text: 'Applying AI Code & Diffs', link: '/human-harness/patching-and-diffs' },
             { text: 'Session Hygiene & Error Feedback', link: '/human-harness/chat-session-hygiene' },
             { text: 'Termux Shell Automation Toolkit', link: '/human-harness/termux-automation-scripts' },
-            { text: 'Free CLI Harnesses (Aider & Gemini)', link: '/human-harness/free-cli-harness-alternatives' }
+            { text: 'Free CLI Harnesses (Aider & Gemini)', link: '/human-harness/free-cli-harness-alternatives' },
+            { text: 'Code Compression & Master Runbook', link: '/human-harness/symbol-maps-and-outlining' }
           ]
         }
       ]

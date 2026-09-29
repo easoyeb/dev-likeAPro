@@ -1,32 +1,32 @@
-# 🧰 Automating the Middleman: Termux Shell Toolkit
+# 🧰 Automating the Middleman: Ubuntu on Android Shell Toolkit
 
 To make your **Human Harness** workflow feel just as fast as an automated agent, you need terminal shortcuts.
 
-In this guide, you will get a ready-to-use **bash script toolkit** for Termux that automates:
+In this guide, you will get a ready-to-use **bash script toolkit** for your **Ubuntu chroot environment** that leverages your native `/usr/local/bin/clip` socket bridge to automate:
 1. Extracting context to clipboard (`ai-ctx`)
 2. Packaging git diffs (`ai-diff`)
-3. Applying clipboard diffs (`ai-patch`)
+3. Slicing public class outlines (`ai-outline`)
 4. Capturing compiler errors into ready-to-paste prompts (`ai-error`)
 5. Capturing Logcat runtime crashes (`ai-logcat`)
+6. Applying Search/Replace blocks (`apply-sr`)
 
 ---
 
-## 🛠️ Step 1: Install the Toolkit in Termux
+## 🛠️ Step 1: Install the Toolkit in Ubuntu
 
-Run these commands in Termux to create your personal script directory and ensure `termux-api` is installed:
+Your environment already has `/usr/local/bin/clip` connected to Android's clipboard via the localhost socket bridge.
+
+Ensure your personal script directory exists and is in `PATH`:
 
 ```bash
-pkg install termux-api git
-mkdir -p ~/bin
-export PATH="$HOME/bin:$PATH"
-echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+mkdir -p /usr/local/bin
 ```
 
 ---
 
 ## 📜 Script 1: `ai-ctx` (Instant Context Extractor)
 
-Save this script as `~/bin/ai-ctx`:
+Save this script as `/usr/local/bin/ai-ctx`:
 
 ```bash
 #!/usr/bin/env bash
@@ -49,28 +49,28 @@ if [ -n "$START" ] && [ -n "$END" ]; then
         echo '```kotlin'
         sed -n "${START},${END}p" "$FILE"
         echo '```'
-    } | termux-clipboard-set
-    echo "📋 Copied lines $START-$END of $FILE to clipboard!"
+    } | clip
+    echo "📋 Copied lines $START-$END of $FILE to Android clipboard!"
 else
     {
         echo "File: \`$FILE\`"
         echo '```kotlin'
         cat "$FILE"
         echo '```'
-    } | termux-clipboard-set
-    echo "📋 Copied entire file $FILE to clipboard!"
+    } | clip
+    echo "📋 Copied entire file $FILE to Android clipboard!"
 fi
 ```
 Make it executable:
 ```bash
-chmod +x ~/bin/ai-ctx
+chmod +x /usr/local/bin/ai-ctx
 ```
 
 ---
 
 ## 📜 Script 2: `ai-diff` (Diff to Clipboard)
 
-Save this script as `~/bin/ai-diff`:
+Save this script as `/usr/local/bin/ai-diff`:
 
 ```bash
 #!/usr/bin/env bash
@@ -89,58 +89,55 @@ TARGET="${1:-}"
         git show "$TARGET"
     fi
     echo '```'
-} | termux-clipboard-set
+} | clip
 
 echo "📋 Git diff copied to Android clipboard!"
 ```
 Make it executable:
 ```bash
-chmod +x ~/bin/ai-diff
+chmod +x /usr/local/bin/ai-diff
 ```
 
 ---
 
-## 📜 Script 3: `ai-patch` (1-Click Clipboard Patch Applier)
+## 📜 Script 3: `ai-outline` (Symbol & Skeleton Extractor)
 
-Save this script as `~/bin/ai-patch`:
+When you want to feed an entire class's public API to the AI without wasting tokens on internal method bodies:
+
+Save this script as `/usr/local/bin/ai-outline`:
 
 ```bash
 #!/usr/bin/env bash
-# Usage: ai-patch [--check]
+# Usage: ai-outline path/to/File.kt
 
-MODE="$1"
+FILE="$1"
 
-if [ "$MODE" = "--check" ]; then
-    echo "🔍 Dry-running patch from clipboard..."
-    termux-clipboard-get | git apply --check
-    if [ $? -eq 0 ]; then
-        echo "✅ Patch matches cleanly! Run 'ai-patch' to apply."
-    else
-        echo "❌ Patch failed dry-run check. Local files may differ."
-    fi
-else
-    echo "⚡ Applying patch from clipboard..."
-    termux-clipboard-get | git apply -v
-    if [ $? -eq 0 ]; then
-        echo "🎉 Successfully applied AI patch!"
-        git status --short
-    else
-        echo "⚠️ Patch application failed. Try dry-running with 'ai-patch --check'."
-    fi
+if [ -z "$FILE" ] || [ ! -f "$FILE" ]; then
+    echo "Usage: ai-outline <file.kt>"
+    exit 1
 fi
+
+{
+    echo "### Class Skeleton Outline: \`$FILE\`"
+    echo '```kotlin'
+    grep -E '^\s*(class|interface|object|enum|sealed|abstract|fun|val|var)\b' "$FILE" | grep -v 'private '
+    echo '```'
+} | clip
+
+echo "📋 Compressed public skeleton outline copied to Android clipboard!"
 ```
 Make it executable:
 ```bash
-chmod +x ~/bin/ai-patch
+chmod +x /usr/local/bin/ai-outline
 ```
 
 ---
 
 ## 📜 Script 4: `ai-error` (Compiler Error Packager)
 
-When a Gradle build fails, you don't need to manually scroll and copy the errors. This script runs a fast Kotlin compilation check and automatically formats the error into your clipboard:
+When a Gradle build fails, this script runs a fast Kotlin compilation check and automatically formats the error into your Android clipboard:
 
-Save this script as `~/bin/ai-error`:
+Save this script as `/usr/local/bin/ai-error`:
 
 ```bash
 #!/usr/bin/env bash
@@ -158,8 +155,8 @@ else
         echo "$BUILD_OUTPUT" | tail -n 25
         echo '```'
         echo ""
-        echo "Please fix this error based on the files provided earlier. Output only the corrected code block."
-    } | termux-clipboard-set
+        echo "Please fix this error based on the files provided earlier. Output only the Search/Replace block."
+    } | clip
 
     echo "❌ Build failed. Error prompt copied directly to Android clipboard!"
     echo "👉 Switch to your web AI chat and hit Paste!"
@@ -167,7 +164,7 @@ fi
 ```
 Make it executable:
 ```bash
-chmod +x ~/bin/ai-error
+chmod +x /usr/local/bin/ai-error
 ```
 
 ---
@@ -176,7 +173,7 @@ chmod +x ~/bin/ai-error
 
 When the app crashes on your phone, run this to copy the crash stack trace directly:
 
-Save this script as `~/bin/ai-logcat`:
+Save this script as `/usr/local/bin/ai-logcat`:
 
 ```bash
 #!/usr/bin/env bash
@@ -191,36 +188,101 @@ echo "📱 Capturing last $LINES lines of Logcat errors..."
     logcat -d -t "$LINES" *:E | grep -v "chatty"
     echo '```'
     echo ""
-    echo "Analyze this exception and provide the fix."
-} | termux-clipboard-set
+    echo "Analyze this exception and provide the Search/Replace fix."
+} | clip
 
-echo "📋 Logcat crash dump copied to clipboard!"
+echo "📋 Logcat crash dump copied to Android clipboard!"
 ```
 Make it executable:
 ```bash
-chmod +x ~/bin/ai-logcat
+chmod +x /usr/local/bin/ai-logcat
+```
+
+---
+
+## 📜 Script 6: `apply-sr` (Search/Replace Block Applier)
+
+Save this script as `/usr/local/bin/apply-sr`:
+
+```python
+#!/usr/bin/env python3
+import sys
+import re
+
+def apply_blocks(text):
+    file_pattern = re.compile(r'File:\s*[`"]?([^`"\n]+)[`"]?', re.IGNORECASE)
+    block_pattern = re.compile(r'<<<<<<<\s*SEARCH\n(.*?)\n=======\n(.*?)\n>>>>>>>\s*REPLACE', re.DOTALL)
+
+    sections = re.split(r'(?=File:\s*[`"]?[^`"\n]+[`"]?)', text)
+    applied_count = 0
+
+    for section in sections:
+        file_match = file_pattern.search(section)
+        if not file_match:
+            continue
+        filepath = file_match.group(1).strip()
+
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except FileNotFoundError:
+            print(f"❌ File not found: {filepath}")
+            continue
+
+        blocks = block_pattern.findall(section)
+        if not blocks:
+            continue
+
+        modified = content
+        for search, replace in blocks:
+            if search in modified:
+                modified = modified.replace(search, replace, 1)
+                applied_count += 1
+                print(f"✅ Applied block to: {filepath}")
+            else:
+                print(f"⚠️ Search block not found in {filepath}:\n{search[:80]}...")
+
+        if modified != content:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(modified)
+
+    if applied_count == 0:
+        print("❌ No matching Search/Replace blocks were applied.")
+    else:
+        print(f"🎉 Successfully applied {applied_count} change(s)!")
+
+if __name__ == '__main__':
+    print("Paste your Search/Replace block below, then press Enter and Ctrl+D:")
+    raw = sys.stdin.read()
+    if not raw.strip():
+        print("Input was empty.")
+        sys.exit(1)
+    apply_blocks(raw)
+```
+Make it executable:
+```bash
+chmod +x /usr/local/bin/apply-sr
 ```
 
 ---
 
 ## ⚡ The Full 30-Second Workflow in Action
 
-Here is what your daily coding loop looks like using this toolkit:
+Here is what your daily coding loop looks like inside Ubuntu:
 
 1. **Extract Context:**
    ```bash
    ai-ctx app/src/main/kotlin/xyz/mpv/rex/ui/player/PlayerViewModel.kt 80 140
    ```
 2. **Switch to Web Chat:** Tap **Paste** and send.
-3. **Copy AI Output:** Tap the AI's "Copy Code" button.
-4. **Apply Patch in Termux:**
+3. **Copy AI Output:** Tap the AI's "Copy Code" button in your browser.
+4. **Apply in Ubuntu:**
    ```bash
-   ai-patch
+   apply-sr
+   # Long-press to paste in terminal, then press Ctrl+D!
    ```
 5. **Verify Build:**
    ```bash
    ai-error
    ```
    *(If errors occur, it automatically re-copies the prompt to clipboard—just paste back to the AI!)*
-
-You are now operating at agentic speed with **$0 subscription costs**!

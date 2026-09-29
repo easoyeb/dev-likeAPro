@@ -46,21 +46,20 @@ File: `path/to/file.kt`
 
 ---
 
-## 📜 3. The Automatic Termux Patching Tool (`apply-sr.py`)
+## 📜 3. The Automatic Patching Tool (`apply-sr`)
 
-To make applying Search/Replace blocks effortless, save this Python script as `~/bin/apply-sr`:
+Save this Python script as `/usr/local/bin/apply-sr`:
 
 ```python
 #!/usr/bin/env python3
 import sys
 import re
-import subprocess
 
-def get_clipboard():
-    try:
-        return subprocess.check_output(['termux-clipboard-get'], text=True)
-    except Exception:
+def get_input():
+    if not sys.stdin.isatty():
         return sys.stdin.read()
+    print("📋 Paste your Search/Replace block below, then press Enter and Ctrl+D:\n")
+    return sys.stdin.read()
 
 def apply_blocks(text):
     # Regex to extract: File: `path` followed by SEARCH/REPLACE blocks
@@ -106,16 +105,16 @@ def apply_blocks(text):
         print(f"🎉 Successfully applied {applied_count} change(s)!")
 
 if __name__ == '__main__':
-    content = get_clipboard()
+    content = get_input()
     if not content.strip():
-        print("Clipboard is empty! Copy the AI's response first.")
+        print("Input was empty.")
         sys.exit(1)
     apply_blocks(content)
 ```
 
 Make it executable:
 ```bash
-chmod +x ~/bin/apply-sr
+chmod +x /usr/local/bin/apply-sr
 ```
 
 ---
@@ -123,9 +122,10 @@ chmod +x ~/bin/apply-sr
 ## ⚡ 4. The 3-Step Execution Loop
 
 1. **Ask Web AI:** Use the directive above.
-2. **Copy Response:** Tap **Copy** in your browser.
-3. **Run in Termux:**
+2. **Copy Response:** Tap **Copy Code** in your browser.
+3. **Run in Ubuntu:**
    ```bash
    apply-sr
+   # Long-press to paste in the terminal, then press Ctrl+D!
    ```
-The script reads your clipboard, locates the file, finds the exact `SEARCH` lines, swaps them with the `REPLACE` lines, and saves the file on disk instantly. Zero typing, zero thumb strain.
+The script locates the file, finds the exact `SEARCH` lines, swaps them with the `REPLACE` lines, and saves the file on disk instantly. Zero typing, zero thumb strain.

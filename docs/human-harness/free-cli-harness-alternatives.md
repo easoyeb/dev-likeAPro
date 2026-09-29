@@ -30,15 +30,16 @@ Most users pay $20/month for the Gemini web subscription without realizing that 
 
 ---
 
-## ⚡ 2. Running Aider in Termux (Automated Agent for Free)
+## ⚡ 2. Running Aider in Ubuntu on Android (Automated Agent for Free)
 
-**Aider** is the industry standard CLI coding agent. It automatically reads your files, writes search/replace blocks, runs tests, and creates git commits for you—directly inside Termux!
+**Aider** is the industry standard CLI coding agent. It automatically reads your files, writes search/replace blocks, runs tests, and creates git commits for you—directly inside your Ubuntu environment!
 
-### Installation in Termux:
+### Installation in Ubuntu:
 ```bash
-# 1. Install Python and dependencies in Termux:
-pkg install python python-pip git clang libxml2 libxslt
-pip install aider-chat
+# 1. Install Python, build tools, and git in Ubuntu:
+apt update
+apt install python3 python3-pip python3-venv git -y
+pip install aider-chat --break-system-packages
 ```
 
 ### Running Aider with your Free Google AI Studio Key:
