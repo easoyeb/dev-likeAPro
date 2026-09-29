@@ -19,7 +19,7 @@ export default defineConfig({
       { text: 'Architecture', link: '/architecture/ops-manager-pattern' },
       { text: 'Workflows', link: '/workflow/vitepress-mermaid' },
       { text: 'Cheat Sheets', link: '/cheatsheets/cli-tools' },
-      { text: 'AI & Automation', link: '/ai/agent-guide' }
+      { text: '🧠 Human Harness', link: '/human-harness/' }
     ],
 
     // Multi-Sidebar: Unique sidebar for each documentation section
@@ -177,6 +177,18 @@ export default defineConfig({
           text: '🤖 AI & Automation',
           items: [
             { text: 'Antigravity & Agentic Pair Programming', link: '/ai/agent-guide' }
+          ]
+        }
+      ],
+      '/human-harness/': [
+        {
+          text: '🧠 The Human Harness',
+          items: [
+            { text: 'Human Harness Blueprint', link: '/human-harness/' },
+            { text: 'High-Speed Context Extraction', link: '/human-harness/context-extraction' },
+            { text: 'Prompt Templates & Directives', link: '/human-harness/prompt-templates' },
+            { text: 'Applying AI Code & Diffs', link: '/human-harness/patching-and-diffs' },
+            { text: 'Termux Shell Automation Toolkit', link: '/human-harness/termux-automation-scripts' }
           ]
         }
       ]
